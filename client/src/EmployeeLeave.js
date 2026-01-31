@@ -7,14 +7,13 @@ function EmployeeLeaves() {
   const [leaves, setLeaves] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/leave/employee/EMP001", {
+    axios.get("http://localhost:7118/api/leave/employee/EMP001", {
       headers: { Authorization: `Bearer ${token}` }
     }).then(res => setLeaves(res.data));
   }, [token]);
 
   return (
     <div>
-      <h2>My Leaves</h2>
       <ul>
         {leaves.map(l => (
           <li key={l.id}>{l.startDate} - {l.endDate} ({l.status})</li>

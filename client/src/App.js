@@ -6,11 +6,11 @@ import ApplyLeave from "./ApplyLeave";
 import EmployeeLeaves from "./EmployeeLeave";
 import AdminDashboard from "./AdminDashboard";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "animate.css/animate.min.css"; // ✅ Correct import
+import "animate.css/animate.min.css";
 
 function AppContent() {
   const { token, role, logout } = useContext(AuthContext);
-  const [showRegister, setShowRegister] = useState(false); // ✅ toggle state
+  const [showRegister, setShowRegister] = useState(false);
 
   if (!token) {
     return (
@@ -51,35 +51,67 @@ function AppContent() {
   }
 
   return (
-    <div className="container-fluid p-4">
-      {/* Navbar/Header */}
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2 className="fw-bold text-primary animate__animated animate__fadeInDown">
-          Leave Management System
-        </h2>
-        <button className="btn btn-danger" onClick={logout}>
-          Logout
-        </button>
+    <div className="d-flex">
+      {/* Sidebar */}
+      <div className="bg-light border-end p-3" style={{ width: "250px", minHeight: "100vh" }}>
+        <h4 className="fw-bold text-primary mb-4">Menu</h4>
+        <ul className="nav flex-column">
+          {role === "Employee" && (
+            <>
+              <li className="nav-item mb-2">
+                <button className="btn btn-outline-primary w-100">Profile</button>
+              </li>
+              <li className="nav-item mb-2">
+                <button className="btn btn-outline-primary w-100">Apply Leave</button>
+              </li>
+              <li className="nav-item mb-2">
+                <button className="btn btn-outline-primary w-100">View Leave Remaining</button>
+              </li>
+              <li className="nav-item mt-3">
+                <button className="btn btn-danger w-100" onClick={logout}>Logout</button>
+              </li>
+            </>
+          )}
+
+          {role === "Admin" && (
+            <>
+              <li className="nav-item mb-2">
+                <button className="btn btn-outline-primary w-100">Dashboard</button>
+              </li>
+              <li className="nav-item mb-2">
+                <button className="btn btn-outline-primary w-100">Manage Leaves</button>
+              </li>
+              <li className="nav-item mt-3">
+                <button className="btn btn-danger w-100" onClick={logout}>Logout</button>
+              </li>
+            </>
+          )}
+        </ul>
       </div>
 
-      {/* Employee Dashboard */}
-      {role === "Employee" && (
-        <div className="row">
-          <div className="col-md-6 animate__animated animate__fadeInLeft">
-            <ApplyLeave />
-          </div>
-          <div className="col-md-6 animate__animated animate__fadeInRight">
-            <EmployeeLeaves />
-          </div>
-        </div>
-      )}
+      {/* Main Content */}
+      <div className="flex-grow-1 p-4">
+        <h2 className="fw-bold text-primary animate__animated animate__fadeInDown mb-4">
+          Leave Management System
+        </h2>
 
-      {/* Admin Dashboard */}
-      {role === "Admin" && (
-        <div className="animate__animated animate__fadeInUp">
-          <AdminDashboard />
-        </div>
-      )}
+        {role === "Employee" && (
+          <div className="row">
+            <div className="col-md-6 animate__animated animate__fadeInLeft">
+              <ApplyLeave />
+            </div>
+            <div className="col-md-6 animate__animated animate__fadeInRight">
+              <EmployeeLeaves />
+            </div>
+          </div>
+        )}
+
+        {role === "Admin" && (
+          <div className="animate__animated animate__fadeInUp">
+            <AdminDashboard />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -93,3 +125,4 @@ function App() {
 }
 
 export default App;
+  

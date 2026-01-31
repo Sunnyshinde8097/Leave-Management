@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "./api";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function Register() {
@@ -9,14 +9,11 @@ function Register() {
 
   const handleRegister = async () => {
     try {
-      await axios.post("http://localhost:5000/api/auth/register", {
-        id: Date.now().toString(),
-        username,
-        password,
-        role,
-      });
+      await api.post("/auth/register", {  username, password, role, });
+      
       alert("Registration successful!");
-    } catch {
+    } catch(error) {
+      console.error("Registration error:", error.response?.data || error.message);
       alert("Registration failed!");
     }
   };
