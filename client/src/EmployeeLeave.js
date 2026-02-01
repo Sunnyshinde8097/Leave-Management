@@ -21,6 +21,7 @@ function EmployeeLeaves() {
     };
 
     if (token && userId) {
+    
       fetchLeaves();
     }
   }, [token, userId]);
@@ -40,9 +41,18 @@ function EmployeeLeaves() {
             <li key={l.id} className="list-group-item">
               {new Date(l.startDate).toLocaleDateString()} - {new Date(l.endDate).toLocaleDateString()} 
               <span className="badge bg-info ms-2">{l.type}</span>
-              <span className={`badge ms-2 ${l.status === "Approved" ? "bg-success" : l.status === "Rejected" ? "bg-danger" : "bg-warning"}`}>
-                {l.status}
-              </span>
+              <span
+  className={`badge ms-2 ${
+    l.status === "Approved"
+      ? "bg-success"
+      : l.status === "Rejected"
+      ? "bg-danger"
+      : "bg-warning"
+  }`}
+>
+  {l.status || "Pending"}
+</span>
+
             </li>
           ))}
         </ul>

@@ -22,10 +22,11 @@ function ApplyLeave() {
     }
 
     try {
+      
       alert("User ID  "+userId+ "and Token "+token);
       await api.post(
         "/Leave/apply",
-        { employeeId: Number(userId), startDate, endDate, reason, type: leaveType },
+        { employeeId: userId, startDate, endDate, reason, type: leaveType },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       alert("Leave applied successfully");
@@ -34,7 +35,8 @@ function ApplyLeave() {
       setEndDate("");
       setReason("");
       setLeaveType("LeaveType");
-    } catch (error) {
+    } catch (error) { 
+      console.error(token);
       console.error("Apply Leave error:", error.response?.data || error.message);
       alert("Failed to apply leave");
     }
