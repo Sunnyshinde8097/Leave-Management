@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Data
 {
@@ -10,12 +11,13 @@ namespace API.Data
         public DateTime EndDate { get; set; }      // Leave end date
         public string Reason { get; set; } = string.Empty; // Reason for leave
         public string Type { get; set; } = "Other"; // Sick, Planned, Other
-        public string Status { get; set; } = "Pending"; // Default status
-        public DateTime AppliedOn { get; set; } = DateTime.UtcNow; // Timestamp
+        // Default// Timestamp
 
-        public int EmployeeId { get; set; } // FK to User.Id
-        [System.Text.Json.Serialization.JsonIgnore]
+        public int EmployeeId { get; set; }
+        [ForeignKey("EmployeeId")]
         public User Employee { get; set; }
+        // FK to User.Id
+
 
     }
 }
